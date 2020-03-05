@@ -1,0 +1,8 @@
+node_modules
+coverage
+bower_components
+.cache
+
+# builded javascript
+graphics/*.js.map
+graphics/*.js

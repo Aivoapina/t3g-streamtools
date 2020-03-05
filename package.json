@@ -1,0 +1,85 @@
+{
+  "name": "t3g-streamtools",
+  "version": "0.0.1",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "Aivoapina",
+    "email": "anssi.varjonen@gmail.com",
+    "url": ""
+  },
+  "files": [
+    "dashboard",
+    "graphics",
+    "extension.js",
+    "extension"
+  ],
+  "keywords": [
+    "nodecg-bundle"
+  ],
+  "nodecg": {
+    "compatibleRange": "^1.1.1",
+    "assetCategories": [
+      {
+        "name": "logos",
+        "title": "Logos",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png"
+        ]
+      }
+    ],
+    "dashboardPanels": [
+      {
+        "name": "T3G Casters",
+        "title": "T3G Casters",
+        "width": 3,
+        "file": "casters.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "T3G Scorebar",
+        "title": "T3G Scorebar",
+        "width": 3,
+        "file": "scorebar.html",
+        "headerColor": "#525F78"
+      }
+    ],
+    "graphics": [
+      {
+        "file": "casters.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "scorebar.html",
+        "width": 1920,
+        "height": 1080
+      }
+    ]
+  },
+  "repository": "https://github.com/nodecg/nodecg.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "events": "^3.1.0",
+    "mobx": "^5.15.2",
+    "mobx-react": "^6.1.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.0.0"
+  },
+  "scripts": {
+    "start": "parcel watch src/casters.html src/scorebar.html -d graphics --public-url ./",
+    "build": "parcel build src/casters.html src/scorebar.html -d graphics --public-url ./"
+  }
+}
