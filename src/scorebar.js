@@ -96,21 +96,37 @@ const BarContainer = styled.div`
 `;
 
 const LolBarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 250px;
+  position: relative;
+  ${props => props.pos === 'left' ? 'margin-left: 212px;' : 'margin-right: 200px;'}
 `;
 
 const LolTagsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   position: absolute;
-  left: 5px;
+  // left: 5px;
   // left: 50%;
   // transform: translate(-50%, 0);
   // top: 0;
+`;
+
+const LolBackground = styled.img`
+
+`;
+
+const LolTextContainer = styled.div`
+  position: absolute;
+  display: flex;
+  width: calc(100% - 110px);
+  justify-content: space-between;
+  top: 3px;
+  ${props => props.pos === 'left' ? `
+    left: 52px;
+  ` : `
+    right: 52px;
+  `}
 `;
 
 @observer
@@ -128,6 +144,9 @@ class Scorebar extends Component {
     this.setListeners('rightScore');
     this.setListeners('rightName');
     this.setListeners('stage');
+    this.setListeners('type');
+    this.setListeners('bgleft');
+    this.setListeners('bgright');
     setTimeout(() => this.setState({ logoOpacity: 1, showCasterTags: true }), 10);
   }
 
@@ -162,17 +181,19 @@ class Scorebar extends Component {
     const showShadows = fadeIn ? logoOpacity && showCasterTags : logoOpacity;
     return (
       <LolTagsContainer>
-        <LolBarContainer>
-          <Bar bottom showTags={showCasterTags} onTransitionEnd={this.handleFading} logoOpacity={logoOpacity} showShadows={showShadows}>
-            <Score nameOpacity={nameOpacity}>{store.scores.leftScore}</Score>
-            <Player nameOpacity={nameOpacity}>{store.scores.leftName}</Player>
-          </Bar>
+        <LolBarContainer pos="left">
+          <LolBackground src={store.scores.bgleft} />
+          <LolTextContainer pos="left">
+            <Score nameOpacity={1}>{store.scores.leftScore}</Score>
+            <Player nameOpacity={1}>{store.scores.leftName}</Player>
+          </LolTextContainer>
         </LolBarContainer>
-        <LolBarContainer>
-          <Bar right bottom showTags={showCasterTags} logoOpacity={logoOpacity} showShadows={showShadows}>
-            <Player nameOpacity={nameOpacity} right>{store.scores.rightName}</Player>
-            <Score nameOpacity={nameOpacity} right>{store.scores.rightScore}</Score>
-          </Bar>
+        <LolBarContainer pos="right">
+          <LolBackground src={store.scores.bgright}/>
+          <LolTextContainer pos="right">
+            <Player nameOpacity={1} right>{store.scores.rightName}</Player>
+            <Score nameOpacity={1} right>{store.scores.rightScore}</Score>
+          </LolTextContainer>
         </LolBarContainer>
       </LolTagsContainer>
     );
@@ -195,7 +216,7 @@ class Scorebar extends Component {
           </Bar>
         </BarContainer>
         <LogoContainer opacity={logoOpacity} onTransitionEnd={() => fadeIn && this.setState({ showCasterTags: true })}>
-          <Logo src="https://varjola.dy.fi/assets/t3g-streamtools/logos/lantrek-2020-square.png" />
+          <Logo src="/assets/t3g-streamtools/logos/lantrek-2020-square.png" />
           <Phase>{store.scores.stage}</Phase>
         </LogoContainer>
         <BarContainer>

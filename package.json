@@ -5,8 +5,7 @@
   "homepage": "",
   "author": {
     "name": "Aivoapina",
-    "email": "anssi.varjonen@gmail.com",
-    "url": ""
+    "email": "anssi.varjonen@gmail.com"
   },
   "files": [
     "dashboard",
@@ -27,6 +26,13 @@
           "jpg",
           "jpeg",
           "gif",
+          "png"
+        ]
+      },
+      {
+        "name": "lolbgs",
+        "title": "LoL Score backgrounds",
+        "allowedTypes": [
           "png"
         ]
       }
@@ -60,7 +66,7 @@
       }
     ]
   },
-  "repository": "https://github.com/nodecg/nodecg.git",
+  "repository": "https://github.com/Aivoapina/t3g-streamtools",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -68,7 +74,7 @@
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
-    "parcel-bundler": "^1.12.4"
+    "parcel": "^2.0.0-nightly.433"
   },
   "dependencies": {
     "events": "^3.1.0",
@@ -79,7 +85,7 @@
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start": "parcel watch src/casters.html src/scorebar.html -d graphics --public-url ./",
-    "build": "parcel build src/casters.html src/scorebar.html -d graphics --public-url ./"
+    "start": "parcel watch src/casters.html src/scorebar.html --dist-dir graphics --public-url ./",
+    "build": "parcel build src/casters.html src/scorebar.html --dist-dir graphics --public-url ./"
   }
 }

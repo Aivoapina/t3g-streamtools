@@ -120,6 +120,7 @@ class CasterTags extends Component {
     this.setListeners('leftSocial');
     this.setListeners('rightCaster');
     this.setListeners('rightSocial');
+    this.setListeners('logo')
     setTimeout(() => this.setState({ logoOpacity: 1 }), 10);
   }
 
@@ -154,7 +155,7 @@ class CasterTags extends Component {
           </Bar>
         </BarContainer>
         <LogoContainer opacity={logoOpacity} onTransitionEnd={() => fadeIn && this.setState({ showCasterTags: true })}>
-          <Logo src="https://varjola.dy.fi/assets/t3g-streamtools/logos/lantrek-2020-square.png" />
+          <Logo src={store.casters.logo} />
         </LogoContainer>
         <BarContainer>
           <Bar right bottom showTags={showCasterTags} logoOpacity={logoOpacity} showShadows={showShadows}>

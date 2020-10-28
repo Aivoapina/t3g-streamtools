@@ -14,7 +14,9 @@ class Store {
     rightScore: '',
     rightName: '',
     stage: '',
-    type: 'lol'
+    type: 'lol',
+    leftbg: '',
+    rightbg: ''
   }
 
   @action setCasters = (key, value) => {

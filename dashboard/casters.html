@@ -12,40 +12,60 @@
 	<div>
 		<div>
 			<label for="leftCaster">Left caster:</label>
-			<input id="leftCaster" type="text" value="mayhem"/>
+			<input id="leftCaster" type="text" value="Left Caster"/>
 		</div>
 		<div>
 			<label for="leftSocial">Left social:</label>
-			<input id="leftSocial" type="text" value="@mayhem092"/>
+			<input id="leftSocial" type="text" value="Left Caster Socials or Nick"/>
 		</div>
 		<div>
 			<label for="rightCaster">Right caster:</label>
-			<input id="rightCaster" type="text" value="kalaztaja"/>
+			<input id="rightCaster" type="text" value="Right Caster"/>
 		</div>
 		<div>
 			<label for="rightSocial">Right social:</label>
-			<input id="rightSocial" type="text" value="@kekw"/>
-		</div>
-			<button id="nameButton">Set name</button>
-		</div>
+			<input id="rightSocial" type="text" value="Right Caster Socials or Nick"/>
+    </div>
+    <div>
+      <label for="logos">Logo:</label>
+      <select name="logos" id="logos"></select>
+    </div>
+    <button id="nameButton">Set name</button>
+	</div>
 	<script>
-		const nameButton = document.querySelector("#nameButton")
+    const logosInput = document.querySelector('#logos')
+    const logosReplicant = nodecg.Replicant('assets:logos');
 
+    NodeCG.waitForReplicants(logosReplicant).then(() => {
+      logosReplicant.on('change', logos => {
+        logosInput.innerHTML = ''
+        logos.map(logo => {
+          const option = document.createElement("option")
+          option.setAttribute('value', logo.url);
+          option.innerHTML = logo.name;
+          logosInput.appendChild(option);
+        })
+      });
+    });
+
+    const nameButton = document.querySelector('#nameButton')
 		const leftCasterInput = document.querySelector('#leftCaster')
 		const leftSocialInput = document.querySelector('#leftSocial')
 		const rightCasterInput = document.querySelector('#rightCaster')
-		const rightSocialInput = document.querySelector('#rightSocial')
+    const rightSocialInput = document.querySelector('#rightSocial')
 
 		const leftCasterReplicant = nodecg.Replicant('leftCaster')
 		const leftSocialReplicant = nodecg.Replicant('leftSocial')
 		const rightCasterReplicant = nodecg.Replicant('rightCaster')
-		const rightSocialReplicant = nodecg.Replicant('rightSocial')
+    const rightSocialReplicant = nodecg.Replicant('rightSocial')
+    const logoReplicant = nodecg.Replicant('logo')
 
 		nameButton.onclick = () => {
 			leftCasterReplicant.value = leftCasterInput.value
 			leftSocialReplicant.value = leftSocialInput.value
 			rightCasterReplicant.value = rightCasterInput.value
-			rightSocialReplicant.value = rightSocialInput.value
+      rightSocialReplicant.value = rightSocialInput.value
+      logoReplicant.value = logosInput.value
 		}
 	</script>
 </body>
