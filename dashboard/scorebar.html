@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-	<style>
-		.monospace {
-			font-family: monospace;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <style>
+    .monospace {
+      font-family: monospace;
+    }
+  </style>
 </head>
+
 <body>
-	<div>
+  <div>
     <label for="type">Type</label>
     <select name="type" id="type">
       <option value="lol">LoL</option>
       <option value="smash">Smash</option>
     </select>
-		<div>
-			<label for="leftScore">Left Score:</label>
-			<input id="leftScore" type="number" value="0"/>
-		</div>
-		<div>
-			<label for="leftName">Left name:</label>
-			<input id="leftName" type="text" value="Left Name"/>
-		</div>
-		<div>
-			<label for="rightScore">Right score:</label>
-			<input id="rightScore" type="number" value="0"/>
-		</div>
-		<div>
-			<label for="rightName">Right name:</label>
-			<input id="rightName" type="text" value="Right Name"/>
+    <div>
+      <label for="leftScore">Left Score:</label>
+      <input id="leftScore" type="number" value="0" />
     </div>
-    <hr></hr>
+    <div>
+      <label for="leftName">Left name:</label>
+      <input id="leftName" type="text" value="Left Name" />
+    </div>
+    <div>
+      <label for="rightScore">Right score:</label>
+      <input id="rightScore" type="number" value="0" />
+    </div>
+    <div>
+      <label for="rightName">Right name:</label>
+      <input id="rightName" type="text" value="Right Name" />
+    </div>
+    <hr>
+    </hr>
     <h3 style="margin-bottom: 10px;">Smash only options</h3>
     <div>
-			<label for="stage">Stage:</label>
-			<input id="stage" type="text" value="Grandfinal"/>
+      <label for="stage">Stage:</label>
+      <input id="stage" type="text" value="Grandfinal" />
     </div>
-    <hr></hr>
+    <hr>
+    </hr>
     <h3 style="margin-bottom: 10px;">LoL only options</h3>
-      <div>
-        <label for="bgleft">Background for leftbar:</label>
-        <select name="bgleft" id="bgleft"></select>
-      </div>
-      <div>
-        <label for="bgright">Background for rightbar:</label>
-        <select name="bgright" id="bgright"></select>
-      </div>
+    <div>
+      <label for="bgleft">Background for leftbar:</label>
+      <select name="bgleft" id="bgleft"></select>
+    </div>
+    <div>
+      <label for="bgright">Background for rightbar:</label>
+      <select name="bgright" id="bgright"></select>
+    </div>
     <br></br>
-		<button id="nameButton">Set scores</button>
-	</div>
-	<script>
-    const setBgs = (input, images) => {
+    <button id="nameButton">Set scores</button>
+  </div>
+  <script>
+    const setBgs = (input,images) => {
       input.innerHTML = ''
       images.map(img => {
         const option = document.createElement("option")
-        option.setAttribute('value', img.url);
+        option.setAttribute('value',img.url);
         option.innerHTML = img.name;
         input.appendChild(option);
       })
@@ -66,40 +70,41 @@
     const bgReplicant = nodecg.Replicant('assets:lolbgs')
 
     NodeCG.waitForReplicants(bgReplicant).then(() => {
-      bgReplicant.on('change', images => {
-        setBgs(bgLeftInput, images)
-        setBgs(bgRightInput, images)
+      bgReplicant.on('change',images => {
+        setBgs(bgLeftInput,images)
+        setBgs(bgRightInput,images)
       });
     });
 
     const nameButton = document.querySelector("#nameButton")
 
-		const leftScoreInput = document.querySelector('#leftScore')
-		const leftNameInput = document.querySelector('#leftName')
-		const rightNameInput = document.querySelector('#rightScore')
+    const leftScoreInput = document.querySelector('#leftScore')
+    const leftNameInput = document.querySelector('#leftName')
+    const rightNameInput = document.querySelector('#rightScore')
     const rightScoreInput = document.querySelector('#rightName')
     const stageInput = document.querySelector('#stage')
     const typeInput = document.querySelector('#type')
 
-		const leftScoreReplicant = nodecg.Replicant('leftScore')
-		const leftNameReplicant = nodecg.Replicant('leftName')
-		const rightNameReplicant = nodecg.Replicant('rightScore')
+    const leftScoreReplicant = nodecg.Replicant('leftScore')
+    const leftNameReplicant = nodecg.Replicant('leftName')
+    const rightNameReplicant = nodecg.Replicant('rightScore')
     const rightScoreReplicant = nodecg.Replicant('rightName')
     const stageReplicant = nodecg.Replicant('stage')
     const typeReplicant = nodecg.Replicant('type')
     const bgLeftReplicant = nodecg.Replicant('bgleft')
     const bgRightReplicant = nodecg.Replicant('bgright')
 
-		nameButton.onclick = () => {
-			leftScoreReplicant.value = leftScoreInput.value
-			leftNameReplicant.value = leftNameInput.value
-			rightNameReplicant.value = rightNameInput.value
+    nameButton.onclick = () => {
+      leftScoreReplicant.value = leftScoreInput.value
+      leftNameReplicant.value = leftNameInput.value
+      rightNameReplicant.value = rightNameInput.value
       rightScoreReplicant.value = rightScoreInput.value
       stageReplicant.value = stageInput.value
       typeReplicant.value = typeInput.value
       bgLeftReplicant.value = bgLeftInput.value
       bgRightReplicant.value = bgRightInput.value
-		}
-	</script>
+    }
+  </script>
 </body>
+
 </html>

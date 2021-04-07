@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .monospace {
+      font-family: monospace;
+    }
+    .rules li {
+      display: inline;
+    }
+
+    .tweets {
+      height: 500px;
+      overflow-y: scroll;
+    }
+    .tweets li {
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid white;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div>
+      <label for="twitterTag">Follow tag:</label>
+      <input id="twitterTag" type="text" value="#hashtag" />
+    </div>
+    <button id="followButton">Follow</button>
+    <ul id="followedTags" class="rules">
+
+    </ul>
+    <ul id="tweets" class="tweets">
+
+    </ul>
+  </div>
+  <script>
+    const rulesRepl = NodeCG.Replicant('twitterRules', 'twitter');
+    const tweetRepl = NodeCG.Replicant('tweets', 'twitter');
+    const newRule = NodeCG.Replicant('addRule', 'twitter');
+    const shownTweetId = NodeCG.Replicant('showTweetId', 'twitter');
+    const tweets = [];
+
+    NodeCG.waitForReplicants(rulesRepl, tweetRepl).then(() => {
+      rulesRepl.on('change', rules => {
+        rules.map(rule => {
+          const tags = document.getElementById('followedTags');
+          const listElement = document.createElement('li');
+          listElement.appendChild(document.createTextNode(rule.value));
+          tags.appendChild(listElement);
+        })
+      });
+      tweetRepl.on('change', tweet => {
+        tweets.push(tweet);
+        const tweetsEle = document.getElementById('tweets');
+        const listElement = document.createElement('li');
+        listElement.appendChild(document.createTextNode(tweet.text));
+        const showButton = document.createElement('button');
+        showButton.appendChild(document.createTextNode('Show tweet'));
+        showButton.onclick = () => {
+          console.log('showing tweet', tweet);
+          shownTweetId.value = tweet.id;
+        }
+        listElement.appendChild(showButton);
+        tweetsEle.appendChild(listElement);
+      });
+    });
+
+    const followButton = document.querySelector('#followButton');
+    const twitterTag = document.querySelector('#twitterTag');
+
+    followButton.onclick = () => {
+      console.log(twitterTag.value);
+      newRule.value = twitterTag.value;
+    }
+  </script>
+</body>
+
+</html>

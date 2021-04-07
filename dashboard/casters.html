@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-	<style>
-		.monospace {
-			font-family: monospace;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <style>
+    .monospace {
+      font-family: monospace;
+    }
+  </style>
 </head>
+
 <body>
-	<div>
-		<div>
-			<label for="leftCaster">Left caster:</label>
-			<input id="leftCaster" type="text" value="Left Caster"/>
-		</div>
-		<div>
-			<label for="leftSocial">Left social:</label>
-			<input id="leftSocial" type="text" value="Left Caster Socials or Nick"/>
-		</div>
-		<div>
-			<label for="rightCaster">Right caster:</label>
-			<input id="rightCaster" type="text" value="Right Caster"/>
-		</div>
-		<div>
-			<label for="rightSocial">Right social:</label>
-			<input id="rightSocial" type="text" value="Right Caster Socials or Nick"/>
+  <div>
+    <div>
+      <label for="leftCaster">Left caster:</label>
+      <input id="leftCaster" type="text" value="Left Caster" />
+    </div>
+    <div>
+      <label for="leftSocial">Left social:</label>
+      <input id="leftSocial" type="text" value="Left Caster Socials or Nick" />
+    </div>
+    <div>
+      <label for="rightCaster">Right caster:</label>
+      <input id="rightCaster" type="text" value="Right Caster" />
+    </div>
+    <div>
+      <label for="rightSocial">Right social:</label>
+      <input id="rightSocial" type="text" value="Right Caster Socials or Nick" />
     </div>
     <div>
       <label for="logos">Logo:</label>
       <select name="logos" id="logos"></select>
     </div>
     <button id="nameButton">Set name</button>
-	</div>
-	<script>
+  </div>
+  <script>
     const logosInput = document.querySelector('#logos')
     const logosReplicant = nodecg.Replicant('assets:logos');
 
@@ -41,7 +43,7 @@
         logosInput.innerHTML = ''
         logos.map(logo => {
           const option = document.createElement("option")
-          option.setAttribute('value', logo.url);
+          option.setAttribute('value',logo.url);
           option.innerHTML = logo.name;
           logosInput.appendChild(option);
         })
@@ -49,24 +51,25 @@
     });
 
     const nameButton = document.querySelector('#nameButton')
-		const leftCasterInput = document.querySelector('#leftCaster')
-		const leftSocialInput = document.querySelector('#leftSocial')
-		const rightCasterInput = document.querySelector('#rightCaster')
+    const leftCasterInput = document.querySelector('#leftCaster')
+    const leftSocialInput = document.querySelector('#leftSocial')
+    const rightCasterInput = document.querySelector('#rightCaster')
     const rightSocialInput = document.querySelector('#rightSocial')
 
-		const leftCasterReplicant = nodecg.Replicant('leftCaster')
-		const leftSocialReplicant = nodecg.Replicant('leftSocial')
-		const rightCasterReplicant = nodecg.Replicant('rightCaster')
+    const leftCasterReplicant = nodecg.Replicant('leftCaster')
+    const leftSocialReplicant = nodecg.Replicant('leftSocial')
+    const rightCasterReplicant = nodecg.Replicant('rightCaster')
     const rightSocialReplicant = nodecg.Replicant('rightSocial')
     const logoReplicant = nodecg.Replicant('logo')
 
-		nameButton.onclick = () => {
-			leftCasterReplicant.value = leftCasterInput.value
-			leftSocialReplicant.value = leftSocialInput.value
-			rightCasterReplicant.value = rightCasterInput.value
+    nameButton.onclick = () => {
+      leftCasterReplicant.value = leftCasterInput.value
+      leftSocialReplicant.value = leftSocialInput.value
+      rightCasterReplicant.value = rightCasterInput.value
       rightSocialReplicant.value = rightSocialInput.value
       logoReplicant.value = logosInput.value
-		}
-	</script>
+    }
+  </script>
 </body>
+
 </html>

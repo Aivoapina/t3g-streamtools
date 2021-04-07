@@ -6,3 +6,6 @@ bower_components
 # builded javascript
 graphics/*.js.map
 graphics/*.js
+
+# env secrets
+env.js

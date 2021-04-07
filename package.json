@@ -51,7 +51,15 @@
         "width": 3,
         "file": "scorebar.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "T3G Twitter",
+        "title": "T3G Twitter",
+        "width": 3,
+        "file": "twitter.html",
+        "headerColor": "#525F78"
       }
+
     ],
     "graphics": [
       {
@@ -61,6 +69,11 @@
       },
       {
         "file": "scorebar.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "twitter.html",
         "width": 1920,
         "height": 1080
       }
@@ -80,12 +93,14 @@
     "events": "^3.1.0",
     "mobx": "^5.15.2",
     "mobx-react": "^6.1.5",
+    "needle": "^2.6.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start": "parcel watch src/casters.html src/scorebar.html --dist-dir graphics --public-url ./",
-    "build": "parcel build src/casters.html src/scorebar.html --dist-dir graphics --public-url ./"
+    "start": "parcel watch src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
+    "build": "parcel build src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
+    "start-nodecg": "node ../../index.js"
   }
 }
