@@ -18,7 +18,7 @@ class TwitterOverlay extends Component {
     NodeCG.waitForReplicants(replicant).then(() => {
       replicant.on('change', value => {
         console.log(replicant.name, value);
-        this.setState({ tweet: value })
+        this.setState({ tweet: value });
       });
     });
   }
@@ -26,9 +26,9 @@ class TwitterOverlay extends Component {
   render() {
     return (
       <MainContainer>
-        
+
       </MainContainer>
-    )
+    );
   }
 }
 

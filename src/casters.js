@@ -23,12 +23,13 @@ const TagsContainer = styled.div`
 const Bar = styled.div`
   position: relative;
   width: ${props => {
-    if (!props.showTags) {
-      return '0px';
-    } else {
+    if (props.showTags) {
       return props.bottom ? 'calc(100% - 10px)' : 'calc(100% - 50px)';
-    }}};
-  align-self: ${props => props.right ? 'flex-start' : 'flex-end' };
+    }
+
+    return '0px';
+  }};
+  align-self: ${props => props.right ? 'flex-start' : 'flex-end'};
   height: 50px;
   background: linear-gradient(0deg, #214f6d 5%, #337aa8 100%);
   box-shadow: ${props => props.showShadows ? '3px 3px 7px 3px #202020' : ''};
@@ -84,17 +85,6 @@ const BarContainer = styled.div`
   width: 50%;
 `;
 
-const splitQueryParams = (params) => {
-  const paramObj = {};
-  const par = params.substring(1);
-  const splittedParams = par.split('&');
-  splittedParams.forEach(sParam => {
-    const x = sParam.split('=');
-    paramObj[x[0]] = x[1];
-  });
-  return paramObj;
-}
-
 @observer
 class CasterTags extends Component {
   state = {
@@ -114,13 +104,12 @@ class CasterTags extends Component {
     });
   }
 
-
   componentDidMount() {
     this.setListeners('leftCaster');
     this.setListeners('leftSocial');
     this.setListeners('rightCaster');
     this.setListeners('rightSocial');
-    this.setListeners('logo')
+    this.setListeners('logo');
     setTimeout(() => this.setState({ logoOpacity: 1 }), 10);
   }
 
@@ -131,12 +120,10 @@ class CasterTags extends Component {
       } else {
         setTimeout(() => this.setState({ fadeIn: false, nameOpacity: 0 }), 10000);
       }
+    } else if (this.state.showCasterTags) {
+      this.setState({ showCasterTags: false });
     } else {
-      if (this.state.showCasterTags) {
-        this.setState({ showCasterTags: false });
-      } else {
-        this.setState({ logoOpacity: 0 });
-      }
+      this.setState({ logoOpacity: 0 });
     }
   }
 
@@ -166,10 +153,9 @@ class CasterTags extends Component {
           </Bar>
         </BarContainer>
       </TagsContainer>
-    )
+    );
   }
 }
 
-
-const root = document.getElementById("app")
-ReactDOM.render(<CasterTags />, root)
+const root = document.getElementById('app');
+ReactDOM.render(<CasterTags />, root);

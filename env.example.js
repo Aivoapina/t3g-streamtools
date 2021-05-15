@@ -2,4 +2,4 @@
 
 module.exports = {
   twitterBearerToken: 'token here'
-}
+};

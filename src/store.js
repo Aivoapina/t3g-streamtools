@@ -20,13 +20,12 @@ class Store {
   }
 
   @action setCasters = (key, value) => {
-	  this.casters[key] = value;
+    this.casters[key] = value;
   }
 
   @action setScores = (key, value) => {
     this.scores[key] = value;
   }
-
 }
 
 export default new Store();
