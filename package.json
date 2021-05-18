@@ -35,6 +35,16 @@
         "allowedTypes": [
           "png"
         ]
+      },
+      {
+        "name": "twitterbg",
+        "title": "Tweet background",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png"
+        ]
       }
     ],
     "dashboardPanels": [
@@ -108,8 +118,8 @@
   "scripts": {
     "start": "parcel watch src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
     "build": "parcel build src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
-    "lint": "eslint src/",
-    "lint-fix": "eslint --fix src/",
+    "lint": "eslint src/ extensions/",
+    "lint-fix": "eslint --fix src/ extensions/",
     "start-nodecg": "node ../../index.js"
   }
 }

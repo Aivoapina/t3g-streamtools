@@ -20,6 +20,9 @@
       margin-bottom: 8px;
       border-bottom: 1px solid white;
     }
+    .tweets li button {
+      display: block;
+    }
     ul {
       list-style-type: none;
       padding: 0;
@@ -43,31 +46,47 @@
     </ul>
   </div>
   <script>
+    const setBgs = (input,images) => {
+      input.innerHTML = ''
+      images.map(img => {
+        const option = document.createElement("option")
+        option.setAttribute('value',img.url);
+        option.innerHTML = img.name;
+        input.appendChild(option);
+      })
+    }
     const rulesRepl = NodeCG.Replicant('twitterRules', 'twitter');
     const tweetRepl = NodeCG.Replicant('tweets', 'twitter');
     const newRule = NodeCG.Replicant('addRule', 'twitter');
-    const shownTweetId = NodeCG.Replicant('showTweetId', 'twitter');
+    const deleteRule = NodeCG.Replicant('deleteRule', 'twitter');
+    const shownTweet = NodeCG.Replicant('showTweet', 'twitter');
+    const bgReplicant = nodecg.Replicant('assets:twitterbg')
     const tweets = [];
 
-    NodeCG.waitForReplicants(rulesRepl, tweetRepl).then(() => {
+    NodeCG.waitForReplicants(rulesRepl, tweetRepl, bgReplicant).then(() => {
       rulesRepl.on('change', rules => {
+        const tags = document.getElementById('followedTags');
+        tags.innerHTML = '';
         rules.map(rule => {
-          const tags = document.getElementById('followedTags');
           const listElement = document.createElement('li');
-          listElement.appendChild(document.createTextNode(rule.value));
+          const buttonElement = document.createElement('button');
+          buttonElement.onclick = () => { deleteRule.value = rule.id }
+          buttonElement.appendChild(document.createTextNode(rule.value));
+          listElement.appendChild(buttonElement);
           tags.appendChild(listElement);
         })
       });
       tweetRepl.on('change', tweet => {
         tweets.push(tweet);
+        console.log('twiitti', tweet.includes.users[0].username);
         const tweetsEle = document.getElementById('tweets');
         const listElement = document.createElement('li');
-        listElement.appendChild(document.createTextNode(tweet.text));
+        listElement.appendChild(document.createTextNode(tweet.includes.users[0].username + ': ' + tweet.data.text));
         const showButton = document.createElement('button');
         showButton.appendChild(document.createTextNode('Show tweet'));
         showButton.onclick = () => {
           console.log('showing tweet', tweet);
-          shownTweetId.value = tweet.id;
+          shownTweet.value = tweet;
         }
         listElement.appendChild(showButton);
         tweetsEle.appendChild(listElement);

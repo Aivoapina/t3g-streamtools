@@ -1,17 +1,37 @@
 const twitter = require('./extensions/twitter');
 
+const fetchRules = async repl => {
+  const rules = await twitter.getRules();
+  console.log('säännöt', rules);
+  repl.value = rules ? rules : [];
+};
+
 module.exports = async function (nodecg) {
   const rulesRepl = nodecg.Replicant('twitterRules', 'twitter');
   const twitterRepl = nodecg.Replicant('tweets', 'twitter');
   const newRuleRepl = nodecg.Replicant('addRule', 'twitter', { persistent: false });
+  const deleteRuleRepl = nodecg.Replicant('deleteRule', 'twitter', { persistent: false });
 
-  const rules = await twitter.getRules();
-  rulesRepl.value = rules;
+  fetchRules(rulesRepl);
 
-  newRuleRepl.on('change', (newData, oldData) => {
+  newRuleRepl.on('change', async (newData, oldData) => {
     if (newData && newData !== oldData) {
       console.log('new rule', newData);
-      twitter.addRule(newData);
+      const success = await twitter.addRule(newData);
+      if (success) {
+        fetchRules(rulesRepl);
+      }
+    }
+  });
+
+  deleteRuleRepl.on('change', async (newData, oldData) => {
+    if (newData && newData !== oldData) {
+      console.log('delete rule', newData);
+      const success = await twitter.deleteRule([newData]);
+      if (success) {
+        console.log(rulesRepl.value);
+        fetchRules(rulesRepl);
+      }
     }
   });
 
