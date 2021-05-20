@@ -45,6 +45,14 @@
           "gif",
           "png"
         ]
+      },
+      {
+        "name": "fonts",
+        "title": "Custom fonts",
+        "allowedTypes": [
+          "woff",
+          "woff2"
+        ]
       }
     ],
     "dashboardPanels": [
@@ -68,6 +76,13 @@
         "width": 3,
         "file": "twitter.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "T3G Donatebar",
+        "title": "T3G Donatebar",
+        "width": 3,
+        "file": "donatebar.html",
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
@@ -83,6 +98,11 @@
       },
       {
         "file": "twitter.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "donatebar.html",
         "width": 1920,
         "height": 1080
       }
@@ -104,7 +124,7 @@
     "@babel/preset-react": "^7.13.13",
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
-    "parcel": "^2.0.0-nightly.433"
+    "parcel": "^2.0.0-beta.2"
   },
   "dependencies": {
     "events": "^3.1.0",
@@ -116,8 +136,8 @@
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start": "parcel watch src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
-    "build": "parcel build src/casters.html src/scorebar.html src/twitter.html --dist-dir graphics --public-url ./",
+    "start": "parcel watch src/casters.html src/scorebar.html src/twitter.html src/donatebar.html --dist-dir graphics --public-url ./",
+    "build": "parcel build src/casters.html src/scorebar.html src/twitter.html src/donatebar.html --dist-dir graphics --public-url ./",
     "lint": "eslint src/ extensions/",
     "lint-fix": "eslint --fix src/ extensions/",
     "start-nodecg": "node ../../index.js"

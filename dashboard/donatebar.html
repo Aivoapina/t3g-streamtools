@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .monospace {
+      font-family: monospace;
+    }
+    #url {
+      width: 350px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div>
+      <label for="url">Url</label>
+      <input id="url" type="text" />
+    </div>
+    <div>
+      <label for="donateGoal">Donate Goal</label>
+      <input id="donateGoal" type="number" value="500" />
+    </div>
+    <button id="setUrl">Done</button>
+  </div>
+  <script>
+    const urlInput = document.querySelector('#url');
+    const donateInput = document.querySelector('#donateGoal');
+    const setUrlButton = document.querySelector('#setUrl');
+
+    const urlReplicant = nodecg.Replicant('donateUrl');
+    const donateReplicant = nodecg.Replicant('donateGoal');
+
+    NodeCG.waitForReplicants(urlReplicant, donateReplicant).then(() => {
+      urlReplicant.on('change', url => {
+        urlInput.value = url;
+      });
+
+      donateReplicant.on('change', donate => {
+        donateInput.value = donate;
+      });
+    });
+
+    setUrlButton.onclick = () => {
+      urlReplicant.value = urlInput.value;
+      donateReplicant.value = donateInput.value;
+    }
+
+  </script>
+</body>
+
+</html>

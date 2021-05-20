@@ -1,5 +1,7 @@
 const twitter = require('./extensions/twitter');
 
+let stream = null;
+
 const fetchRules = async repl => {
   const rules = await twitter.getRules();
   console.log('säännöt', rules);
@@ -35,5 +37,17 @@ module.exports = async function (nodecg) {
     }
   });
 
-  twitter.startStream(twitterRepl);
+  stream = twitter.startStream(twitterRepl);
+
+  nodecg.listenFor('restartStream', 'twitter', (value, ack) => {
+    console.log('haloo?', stream);
+    if (stream) {
+      stream.request.abort();
+      stream = twitter.startStream(twitterRepl);
+      ack(null, true);
+    }
+    ack(new Error('rip'));
+  });
+
+
 };

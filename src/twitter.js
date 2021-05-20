@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { observer } from 'mobx-react';
+
+const Fonts = createGlobalStyle`
+  @font-face {
+    font-family: 'Pink-sans';
+    src: url('/assets/t3g-streamtools/fonts/Pink-Sans-100.woff') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+`;
 
 const MainContainer = styled.div`
   height: 540px;
@@ -21,12 +30,15 @@ const TweetContainer = styled.div`
 
 const Username = styled.div`
   font-size: 24px;
-  font-weight: bold;
   margin-bottom: 10px;
+  font-family: Pink-sans;
+  letter-spacing: 0.20px;
 `;
 
 const Tweet = styled.div`
   font-size: 20px;
+  font-family: Pink-sans;
+  letter-spacing: 0.20px;
 `;
 
 @observer
@@ -60,6 +72,7 @@ class TwitterOverlay extends Component {
 
     return (
       <MainContainer bgUrl={bgUrl}>
+        <Fonts />
         <TweetContainer>
           <Username>{tweet.includes.users[0].username}</Username>
           <Tweet>{tweet.data.text}</Tweet>

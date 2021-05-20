@@ -41,6 +41,7 @@
     <ul id="followedTags" class="rules">
 
     </ul>
+    <button id="restartStream">Restart stream</button>
     <ul id="tweets" class="tweets">
 
     </ul>
@@ -95,6 +96,13 @@
 
     const followButton = document.querySelector('#followButton');
     const twitterTag = document.querySelector('#twitterTag');
+    const restartStream = document.querySelector('#restartStream')
+
+    restartStream.onclick = () => {
+      NodeCG.sendMessageToBundle('restartStream', 'twitter')
+        .then(result => console.log('Restarted stream'))
+        .catch(error => console.log(error));
+    }
 
     followButton.onclick = () => {
       console.log(twitterTag.value);

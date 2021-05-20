@@ -46,7 +46,6 @@ const startStream = async repl => {
   stream.on('data', data => {
     try {
       const json = JSON.parse(data);
-      console.log('twitter stream', json, json.data.user);
       repl.value = json;
     } catch (err) {
       if (data.status === 401) {
@@ -56,6 +55,8 @@ const startStream = async repl => {
       console.log(data.detail);
     }
   });
+  
+  return stream;
 };
 
 module.exports = { addRule, getRules, startStream, deleteRule };
