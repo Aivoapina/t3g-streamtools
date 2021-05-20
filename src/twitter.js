@@ -13,30 +13,52 @@ const Fonts = createGlobalStyle`
 `;
 
 const MainContainer = styled.div`
-  height: 540px;
-  width: 960px;
-  background: url(${props => props.bgUrl});
-  background-position: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
+  width: 700px;
+  height: 100%;
+  position: relative;
+  opacity: ${props => props.hide ? 0 : 1};
+  transition: opacity ease-in-out 0.5s;
+`;
+
+const BackgroundImage = styled.img`
+  display: block;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  height: 100%;
 `;
 
 const TweetContainer = styled.div`
   position: absolute;
-  top: 110px;
-  left: 325px;
-  width: 500px;
+  top: 0px;
+  left: 0px;
+  margin: 40px 10px 10px 10px;
+  width: calc(100% - 20px);
 `;
 
-const Username = styled.div`
-  font-size: 24px;
-  margin-bottom: 10px;
+const Heading = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Username = styled.span`
+  font-size: 72px;
   font-family: Pink-sans;
   letter-spacing: 0.20px;
+  margin-left: 25%;
+`;
+
+const Donation = styled.span`
+  font-size: 72px;
+  font-family: Pink-sans;
+  letter-spacing: 0.20px;
+  margin-right: 20px;
 `;
 
 const Tweet = styled.div`
-  font-size: 20px;
+  font-size: 32px;
+  margin-left: 20px;
+  margin-top: 70px;
   font-family: Pink-sans;
   letter-spacing: 0.20px;
 `;
@@ -45,7 +67,13 @@ const Tweet = styled.div`
 class TwitterOverlay extends Component {
   state = {
     tweet: {},
-    bgUrl: ''
+    bgUrl: '',
+    hide: true,
+    backgrounds: []
+  }
+
+  hideTweet = () => {
+    this.setState({ hide: true });
   }
 
   componentDidMount() {
@@ -53,28 +81,36 @@ class TwitterOverlay extends Component {
     const bgReplicant = nodecg.Replicant('assets:twitterbg');
     NodeCG.waitForReplicants(replicant, bgReplicant).then(() => {
       replicant.on('change', value => {
-        console.log(replicant.name, value);
-        this.setState({ tweet: value });
+        const { tweet, backgrounds } = this.state;
+        if (!tweet.data || value.data.text !== tweet.data.text) {
+          const bg = backgrounds.find(b => b.name.includes(tweet.type));
+          const bgUrl = bg ? bg.url : '';
+          console.log('urli', bgUrl);
+          this.setState({ tweet: value, hide: false, bgUrl });
+          setTimeout(this.hideTweet, 20000);
+        }
       });
       bgReplicant.on('change', value => {
-        console.log('kuvat', value[0]);
-        this.setState({ bgUrl: value[0].url });
+        this.setState({ backgrounds: value, bgUrl: value[0].url });
       });
     });
   }
 
   render() {
-    const { tweet, bgUrl } = this.state;
-    console.log('piirto', tweet);
+    const { tweet, bgUrl, hide } = this.state;
     if (!tweet.data) {
       return null;
     }
 
     return (
-      <MainContainer bgUrl={bgUrl}>
+      <MainContainer hide={hide}>
         <Fonts />
+        <BackgroundImage src={bgUrl} />
         <TweetContainer>
-          <Username>{tweet.includes.users[0].username}</Username>
+          <Heading>
+            <Username>{tweet.type === 'twitter' ? '@' : ''}{tweet.includes.users[0].username}</Username>
+            {tweet.type === 'donate' && tweet.donateAmount && <Donation>{tweet.donateAmount}</Donation>}
+          </Heading>
           <Tweet>{tweet.data.text}</Tweet>
         </TweetContainer>
       </MainContainer>
