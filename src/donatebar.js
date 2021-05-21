@@ -99,7 +99,7 @@ export default class Gdd extends React.Component {
         </ProgressBarContainer>
         <GoalSpan>Goal: {donateGoal}€</GoalSpan>
       </DonoBarContainer>
-    )
+    );
   }
 }
 

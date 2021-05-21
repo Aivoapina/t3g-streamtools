@@ -14,7 +14,7 @@ const Fonts = createGlobalStyle`
 
 const MainContainer = styled.div`
   width: 700px;
-  height: 100%;
+  // height: 100%;
   position: relative;
   opacity: ${props => props.hide ? 0 : 1};
   transition: opacity ease-in-out 0.5s;
@@ -25,7 +25,6 @@ const BackgroundImage = styled.img`
   margin: auto;
   max-height: 100%;
   max-width: 100%;
-  height: 100%;
 `;
 
 const TweetContainer = styled.div`
@@ -46,6 +45,8 @@ const Username = styled.span`
   font-family: Pink-sans;
   letter-spacing: 0.20px;
   margin-left: 25%;
+  color: #00c9a8;
+  -webkit-text-stroke: 2px black;
 `;
 
 const Donation = styled.span`
@@ -53,6 +54,8 @@ const Donation = styled.span`
   font-family: Pink-sans;
   letter-spacing: 0.20px;
   margin-right: 20px;
+  color: #00C9A8;
+  -webkit-text-stroke: 2px black;
 `;
 
 const Tweet = styled.div`
@@ -61,13 +64,15 @@ const Tweet = styled.div`
   margin-top: 70px;
   font-family: Pink-sans;
   letter-spacing: 0.20px;
+  color: #00C9A8;
+  -webkit-text-stroke: 1px black;
+
 `;
 
 @observer
 class TwitterOverlay extends Component {
   state = {
     tweet: {},
-    bgUrl: '',
     hide: true,
     backgrounds: []
   }
@@ -81,31 +86,33 @@ class TwitterOverlay extends Component {
     const bgReplicant = nodecg.Replicant('assets:twitterbg');
     NodeCG.waitForReplicants(replicant, bgReplicant).then(() => {
       replicant.on('change', value => {
-        const { tweet, backgrounds } = this.state;
+        const { tweet } = this.state;
         if (!tweet.data || value.data.text !== tweet.data.text) {
-          const bg = backgrounds.find(b => b.name.includes(tweet.type));
-          const bgUrl = bg ? bg.url : '';
-          console.log('urli', bgUrl);
-          this.setState({ tweet: value, hide: false, bgUrl });
-          setTimeout(this.hideTweet, 20000);
+          this.setState({ tweet: value, hide: false });
+          setTimeout(this.hideTweet, 30000);
         }
       });
       bgReplicant.on('change', value => {
-        this.setState({ backgrounds: value, bgUrl: value[0].url });
+        const data = {
+          twitter: value.find(b => b.name.includes('twitter')).url,
+          donate: value.find(b => b.name.includes('donate')).url
+        };
+        this.setState({ backgrounds: data });
       });
     });
   }
 
   render() {
-    const { tweet, bgUrl, hide } = this.state;
-    if (!tweet.data) {
+    const { tweet, backgrounds, hide } = this.state;
+
+    if (!tweet.data || !backgrounds.donate) {
       return null;
     }
 
     return (
       <MainContainer hide={hide}>
         <Fonts />
-        <BackgroundImage src={bgUrl} />
+        <BackgroundImage src={backgrounds[tweet.type]} />
         <TweetContainer>
           <Heading>
             <Username>{tweet.type === 'twitter' ? '@' : ''}{tweet.includes.users[0].username}</Username>
