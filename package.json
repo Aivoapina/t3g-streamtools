@@ -35,6 +35,24 @@
         "allowedTypes": [
           "png"
         ]
+      },
+      {
+        "name": "twitterbg",
+        "title": "Tweet background",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png"
+        ]
+      },
+      {
+        "name": "fonts",
+        "title": "Custom fonts",
+        "allowedTypes": [
+          "woff",
+          "woff2"
+        ]
       }
     ],
     "dashboardPanels": [
@@ -51,6 +69,20 @@
         "width": 3,
         "file": "scorebar.html",
         "headerColor": "#525F78"
+      },
+      {
+        "name": "T3G Twitter",
+        "title": "T3G Twitter",
+        "width": 3,
+        "file": "twitter.html",
+        "headerColor": "#525F78"
+      },
+      {
+        "name": "T3G Donatebar",
+        "title": "T3G Donatebar",
+        "width": 3,
+        "file": "donatebar.html",
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
@@ -63,29 +95,51 @@
         "file": "scorebar.html",
         "width": 1920,
         "height": 1080
+      },
+      {
+        "file": "twitter.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "donatebar.html",
+        "width": 1920,
+        "height": 1080
       }
     ]
   },
   "repository": "https://github.com/Aivoapina/t3g-streamtools",
   "license": "MIT",
+  "resolutions": {
+    "@babel/preset-env": "7.8.3"
+  },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/preset-react": "^7.8.3",
-    "parcel": "^2.0.0-nightly.433"
+    "@babel/compat-data": "^7.14.0",
+    "@babel/core": "^7.14.2",
+    "@babel/eslint-parser": "^7.14.2",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-class-static-block": "^7.13.11",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "eslint": "^7.26.0",
+    "eslint-plugin-react": "^7.23.2",
+    "parcel": "^2.0.0-beta.2"
   },
   "dependencies": {
     "events": "^3.1.0",
     "mobx": "^5.15.2",
     "mobx-react": "^6.1.5",
+    "needle": "^2.6.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start": "parcel watch src/casters.html src/scorebar.html --dist-dir graphics --public-url ./",
-    "build": "parcel build src/casters.html src/scorebar.html --dist-dir graphics --public-url ./"
+    "start": "parcel watch src/casters.html src/scorebar.html src/twitter.html src/donatebar.html --dist-dir graphics --public-url ./",
+    "build": "parcel build src/casters.html src/scorebar.html src/twitter.html src/donatebar.html --dist-dir graphics --public-url ./",
+    "lint": "eslint src/ extensions/",
+    "lint-fix": "eslint --fix src/ extensions/",
+    "start-nodecg": "node ../../index.js"
   }
 }

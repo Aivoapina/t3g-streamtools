@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import store from './store';
 // import CountDown from './countdown';
 
-/*const logos = {
+/* const logos = {
   smash: require('../images/bob-omb.png'),
   magic: require('../images/magic.jpg')
 } */
@@ -25,12 +25,13 @@ const TagsContainer = styled.div`
 const Bar = styled.div`
   position: relative;
   width: ${props => {
-    if (!props.showTags) {
-      return '0px';
-    } else {
+    if (props.showTags) {
       return props.bottom ? 'calc(100% - 20px)' : 'calc(100% - 60px)';
-    }}};
-  align-self: ${props => props.right ? 'flex-start' : 'flex-end' };
+    }
+
+    return '0px';
+  }};
+  align-self: ${props => props.right ? 'flex-start' : 'flex-end'};
   height: 50px;
   background: linear-gradient(0deg, #214f6d 5%, #337aa8 100%);
   box-shadow: ${props => props.showShadows ? '3px 3px 7px 3px #202020' : ''};
@@ -60,7 +61,7 @@ const Player = styled(PlayerText)`
   ${props => props.right ? 'left: 35px;' : 'right: 35px;'}
 `;
 const Score = styled(PlayerText)`
-  ${props => !props.right ? 'left: 20px;' : 'right: 20px;'}
+  ${props => props.right ? 'right: 20px;' : 'left: 20px;'}
 `;
 
 const LogoContainer = styled.div`
@@ -167,18 +168,14 @@ class Scorebar extends Component {
       } else {
         // setTimeout(() => this.setState({ fadeIn: false, nameOpacity: 0 }), 10000);
       }
+    } else if (this.state.showCasterTags) {
+      this.setState({ showCasterTags: false });
     } else {
-      if (this.state.showCasterTags) {
-        this.setState({ showCasterTags: false });
-      } else {
-        this.setState({ logoOpacity: 0 });
-      }
+      this.setState({ logoOpacity: 0 });
     }
   }
 
   renderLolBars = () => {
-    const { logoOpacity, showCasterTags, nameOpacity, fadeIn } = this.state;
-    const showShadows = fadeIn ? logoOpacity && showCasterTags : logoOpacity;
     return (
       <LolTagsContainer>
         <LolBarContainer pos="left">
@@ -202,7 +199,7 @@ class Scorebar extends Component {
   render() {
     const { logoOpacity, showCasterTags, nameOpacity, fadeIn } = this.state;
     const showShadows = fadeIn ? logoOpacity && showCasterTags : logoOpacity;
-    
+
     if (store.scores.type === 'lol') {
       return this.renderLolBars();
     }
@@ -226,7 +223,7 @@ class Scorebar extends Component {
           </Bar>
         </BarContainer>
       </TagsContainer>
-    )
+    );
   }
 }
 

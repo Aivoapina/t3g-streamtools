@@ -1,0 +1,25 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parser": "@babel/eslint-parser",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "nodecg": "writable",
+        "NodeCG": "writable"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "indent": ["error", 2],
+        "object-curly-spacing": ["error", "always"],
+        "capitalized-comments": ["error", "never"]
+    }
+}
